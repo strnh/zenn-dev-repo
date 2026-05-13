@@ -13,10 +13,10 @@ id: 06a529ff95ee44b6ff26
 slide: false
 ignorePublish: false
 ---
-# Forwarding Information Base [fib](https://tex2e.github.io/rfc-translater/html/rfc3222.html) とは
+## Forwarding Information Base [fib](https://tex2e.github.io/rfc-translater/html/rfc3222.html) とは
 
 - 要するに ルーターの転送情報ベース(フォワードする先が記されたデータベース) 
-‐ FreeBSD では 7.1 から複数の FIB を持てるようになっていた
+- FreeBSD では 7.1 から複数の FIB を持てるようになっていた
 - FreeBSD の場合 プロセス単位の環境で FIB を選べるようになっている
 - デフォルトでは、FIB は 1個で ID=0
 
@@ -38,14 +38,27 @@ ignorePublish: false
     
 2. route 設定について
 
-         <<ISP1>>                      <<ISP2>> 
-            |                             |
-        [router1] 192.168.1.1         [router2] 192.168.1.254
-            |                             |
-            +-------------+---------------+ (192.168.1.0/24)
-                          |
-                   [ FreeBSD host ] 192.168.1.2
+```mermaid
+flowchart TB
+    ISP1["ISP1"]
+    ISP2["ISP2"]
 
+    R1["router1<br/>192.168.1.1"]
+    R2["router2<br/>192.168.1.254"]
+
+    LAN["192.168.1.0/24"]
+
+    FBSD["FreeBSD host<br/>192.168.1.2"]
+
+    ISP1 --> R1
+    ISP2 --> R2
+
+    R1 --- LAN
+    R2 --- LAN
+
+    LAN --- FBSD
+
+```
 2-1. [router1] がISP1 デフォルト利用だが、[router2]を追加してISP2のサービスも受けたい
 
 - rc.conf
@@ -65,16 +78,24 @@ defaultrouter="192.168.1.1"
 
 ## ハマりどころ
 
-1.  kernel変数を変更後、
+### default route が設定できない
+
+FIB導入の目的が達成されない... 
+
+たとえば kernel変数を変更後、
   
   "setfib 1 netstat -r"  ←　はすぐに出来るので問題はないと思うが・・・
-  "setfib 1 route add default xxxxx" とやってもなぜか動かない？？ということになる。
+  "setfib 1 route add default xxxxx" 
+とやってもなぜか動かない？？ということになる。
 
-  理由: "setfib 1 ifconfig inet 192.168.1.129/24 alias " などとFIB=1 環境で明示的に
-  インターフェイスを追加しない限り自動で 192.168.1.0/24　ネットワークへの経路は作られない。
-  よって、 192.168.1.0/24 を経て既定ルータ(default gw) の設定をすることは出来ない。
-  
-## ハマりどころ jail (bastillebsd)
+理由: 
+
+```
+"setfib 1 ifconfig inet 192.168.1.129/24 alias " などとFIB=1 環境で明示的に
+インターフェイスを追加しない限り自動で 192.168.1.0/24　ネットワークへの経路は作られない。
+よって、 192.168.1.0/24 を経て既定ルータ(default gw) の設定をすることは出来ない。
+```  
+###  jail (bastillebsd)
 
 - jail 環境のサーバであってもプロセス単位で fib 番号を設定するため、デフォルトは 0 である
 
