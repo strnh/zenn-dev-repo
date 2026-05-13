@@ -94,6 +94,26 @@ Cache-Control: no-cache, max-age=0, must-revalidate
 - 2026/05/12 現在、この方法で expat-2.8.0 (CVE-2026-41080) 対応した 2.8.1 を取得できてます。
 - そのうち FreeBSD-ports 公式 repoが治ることを期待します。
 
+## gitup の修正
+
+- gitup の[修正パッチ](https://github.com/johnmehr/gitup/commit/38090aa09cba27664e524ecd9cabfeb2515bc579)
+
+- 修正パッチの内容:
+1. bufferの拡大
+2 HTTP レスポンスコード判定の位置を変更。
+  以前はレスポンス先頭が HTTP/1. で始まる場合だけステータスコードを確認。
+  修正後は session->response の先頭16バイト以内から HTTP/1. を探し、
+  見つかればステータスコードを読む。
+  200 は成功扱い。proxy 利用時は従来通り 2xx 全般を成功扱い。
+ 
+## pkg 配布が望まれる
+
+- 残念ながら、latest でも　gitup-1.0 (中身は 0.99) パッケージなのでコンパイルが必要です。そうなると gitup以外の方法で portsを更新するか、repoを変えるかのどちらか。
+
+- github repo に差し替えた後もエラーになることがああり、0.99(1.0)は1.01に速やかに更新されることが望ましい
+
+- [依存はない](https://www.freshports.org/net/gitup/#dependencies)みたいに書いてありましたが、opensslに依存します。 
+
 ## 参考
 
 - [Bug 295065 - Error running gitup ports](https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=295065)
