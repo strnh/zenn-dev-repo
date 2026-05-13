@@ -1,5 +1,5 @@
 ---
-title: FreeBSD_gitup_quickfix
+title: FreeBSD\ gitup\ のトラブルシュート
 description: FreeBSD-ports の更新に使う gitup の default設定で起きている障害回避策
 tags:
   - GitHub
@@ -15,15 +15,15 @@ organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# FreeBSD gitup のトラブルシュート
+## FreeBSD gitup のトラブルシュート
 
 - gitup とはなんですか ⇒ [便利そうなGUI](https://github.com/git-up/gitup)ではありません。　⇒ [portsnap とか svnlite とかの代わりは gitup がいいらしいですよ](https://qiita.com/s_mitu/items/73e19035bec72bf59c71)
 - portsnap はもう 終わりました (2026/04/30) [Recommended usage of git instead of portsnap](https://forums.freebsd.org/threads/recommended-usage-of-git-instead-of-portsnap.93822/)
 - 手元の機材を 全部 gitup ports に変更(そういえば、cvsup から portsnap に入れ替えたのいつだか覚えてない大昔）
 - 2026/05/08 頃から、 gitup ports で ports を拾っていたのがエラーになっています。
-- 最近 pkg ではセキュリティアップデートが間に合ってない(python3.11は放置な）のでportsに行かざる得ず
-- nginx-full いれると色々入りすぎるから ports がいいのだが 手元で ports更新が出来てない
-- portsnap が未だ生きているので、急いでたやつはそっちで...
+- 最近 pkg ではセキュリティアップデートが間に合ってない(python3.11は放置な）のでports でコンパイルして間に合わせています
+- nginx-full いれると色々入りすぎるから ports がいいのだが 手元で ports更新が出来ていません
+- portsnap が未だ生きているので、戻したところもあり。
 
 ## 何が起きてるのか
 
@@ -64,7 +64,7 @@ Cache-Control: no-cache, max-age=0, must-revalidate
 
 ## 検索してみる。
 
- ×  "足掻く”　のと同じことを進められる (by GPTchat)
+ ×  "足掻く”　のと同じことを進められる (by ChatGPT)
 
 ## メーリングリストで
 
