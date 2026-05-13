@@ -1,5 +1,5 @@
 ---
-title: FreeBSD\ gitup\ のトラブルシュート
+title: FreeBSD gitup のトラブルシュート
 description: FreeBSD-ports の更新に使う gitup の default設定で起きている障害回避策
 tags:
   - GitHub
