@@ -136,5 +136,5 @@ net.debugnet.fib: 0
 
 - FIB は結構前からあるのだが、Process 単位というのがわかりにくかった。
 - VNETがつかえるなら経路管理的にはこちらのほうがやりやすい場合もあり
-- VNETでない jail では インターフェース単位で管理できないことから待ち受け時の問題の切り分けが・・・  [FreeBSD の VRF。]("https://running-dog.net/2021/10/post_2489.html")
+- VNETでない jail では インターフェース単位で管理できないことから待ち受け時の問題の切り分けが・・・  [FreeBSD の VRF。](https://running-dog.net/2021/10/post_2489.html)
 
