@@ -125,6 +125,19 @@ net.debugnet.fib: 0
 
 ```
 - setfib 1 bastille console jail とやれば、FIB=1 の設定で動く shell から動く
+- jail.conf に exec.fib={{num}}; を追加すると FIB=1 でネットワーク構成される
+- jail-host する側での設定としては、jail に渡す loopback端点が setfib 1 で初期化されていないので以下の設定を追加する 
+
+jailnet="10.0.0.0/8" として
+jailnet の 一箇所を jail-host側で出口として持つ (10.0.0.1)
+
+```console
+ifconfig {{loopback}} 10.0.0.1 alias
+setfib 1 route add 10.0.0.0/8 -iface {{loopback}}
+
+```
+
+上記設定がない場合 jail loopback 設定がないまま jail が動くため外部には出られるがjailの中で閉じたネットワークが機能しないので注意すること。
 
 
 ### fib on jail vs VNET jail 
@@ -134,7 +147,8 @@ net.debugnet.fib: 0
 
 ## まとめ
 
-- FIB は結構前からあるのだが、Process 単位というのがわかりにくかった。
-- VNETがつかえるなら経路管理的にはこちらのほうがやりやすい場合もあり
+- FIB は結構前からあるのだが、Process 単位というのが cons/pros あり。　
+- loopback/defaultroute の "設定しわすれ" で確実にハマる。 
+- VNETがつかえるなら経路管理的にはこちらのほうがやりやすい場合もあり。
 - VNETでない jail では インターフェース単位で管理できないことから待ち受け時の問題の切り分けが・・・  [FreeBSD の VRF。](https://running-dog.net/2021/10/post_2489.html)
 
