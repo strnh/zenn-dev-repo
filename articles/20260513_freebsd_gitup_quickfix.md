@@ -55,7 +55,7 @@ Cache-Control: no-cache, max-age=0, must-revalidate
 ```
 
 - なにかが壊れた？
-- "Invalid argument" これだけじゃ分からない。
+- "Invalid argument" これだけじゃ分かりませんでした。
 
 ## とりあえず足掻く
 
@@ -68,14 +68,14 @@ Cache-Control: no-cache, max-age=0, must-revalidate
 
 ## メーリングリストで
 
-- git コマンドで github repo. で拾ったら問題なかった
-- github repo から取ってくれば動くようになるんじゃね？
+- git コマンドで github repo. で拾ったら問題なかった。
+- github repo から取る設定 gitup.conf にしてみるといいよ
 
 ## 解決patch 
 
-- FreeBSD-ports の mirror が他にあればそこにしてもいいのだが、取り敢えず githubにしといた。
+- FreeBSD-ports の mirror が他にあればそこにしてもいいのですが、取り敢えず githubにしました。
 
-```
+```diff
 -- gitup.conf.sample	2026-04-24 23:35:41.000000000 +0900
 +++ gitup.conf	2026-05-12 15:39:31.815924000 +0900
 @@ -17,7 +17,8 @@
@@ -91,8 +91,8 @@ Cache-Control: no-cache, max-age=0, must-revalidate
 ```
 ## 暫定開通・結果
 
-- 2026/05/12 現在、この方法で expat-2.8.0 (CVE-2026-41080) 対応した 2.8.1 を取得できている
-- そのうち FreeBSD-ports 公式 repoが治ることを期待するか、このままで行くか
+- 2026/05/12 現在、この方法で expat-2.8.0 (CVE-2026-41080) 対応した 2.8.1 を取得できてます。
+- そのうち FreeBSD-ports 公式 repoが治ることを期待します。
 
 ## 参考
 
