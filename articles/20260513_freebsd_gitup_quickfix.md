@@ -1,15 +1,12 @@
 ---
 title: FreeBSD gitup のトラブルシュート
-description: FreeBSD-ports の更新に使う gitup の default設定で起きている障害回避策
 tags:
   - GitHub
   - FreeBSD
   - ports
   - gitup
-categories:
-  - Technologie
 private: false
-updated_at: '2026-05-12T16:58:09+09:00'
+updated_at: '2026-05-13T17:44:01+09:00'
 id: f410c03d23058c6ae844
 organization_url_name: null
 slide: false
@@ -100,17 +97,17 @@ Cache-Control: no-cache, max-age=0, must-revalidate
 
 - 修正パッチの内容:
 1. bufferの拡大
-2 HTTP レスポンスコード判定の位置を変更。
-  以前はレスポンス先頭が HTTP/1. で始まる場合だけステータスコードを確認。
-  修正後は session->response の先頭16バイト以内から HTTP/1. を探し、
-  見つかればステータスコードを読む。
-  200 は成功扱い。proxy 利用時は従来通り 2xx 全般を成功扱い。
+2. HTTP レスポンスコード判定の位置を変更。
+   以前はレスポンス先頭が HTTP/1. で始まる場合だけステータスコードを確認。
+   修正後は session->response の先頭16バイト以内から HTTP/1. を探し、
+   見つかればステータスコードを読む。
+   200 は成功扱い。proxy 利用時は従来通り 2xx 全般を成功扱い。
  
 ## pkg 配布が望まれる
 
 - 残念ながら、latest でも　gitup-1.0 (中身は 0.99) パッケージなのでコンパイルが必要です。そうなると gitup以外の方法で portsを更新するか、repoを変えるかのどちらか。
 
-- github repo に差し替えた後もエラーになることがああり、0.99(1.0)は1.01に速やかに更新されることが望ましい
+- github repo に差し替えた後もエラーになることがあり、0.99(1.0)は1.01に速やかに更新されることが望ましい
 
 - [依存はない](https://www.freshports.org/net/gitup/#dependencies)みたいに書いてありましたが、opensslに依存します。 
 
