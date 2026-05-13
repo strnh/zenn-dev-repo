@@ -73,7 +73,7 @@ defaultrouter="192.168.1.1"
 手作業で以下の設定をすれば FIB=1 のとき router2 経由でISP2に行く。
 
 - sysctl -w net.fibs=2
-- setfib 1 route add 192.168.1.0/24 -iface em0  # この設定は必要。
+- setfib 1 route add 192.168.1.0/24 -iface igb0  # この設定は必要。
 - setfib 1 route add default 192.168.1.254 # ↑これをしておかないと FIB=1の設定が出来ない。
 
 ## ハマりどころ
