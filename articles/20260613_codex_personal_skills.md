@@ -16,7 +16,7 @@ categories:
 
 ## strnh が　この記事を書く "きっかけ"
 
-- Claude Code では、長らくセッション終了時 申し送りをさせたいと 不定形なpromptを送っていました。
+- Claude Code で 長らくセッション終了時 申し送りに 不定形なprompt "ログ書いて"　などと送っていました。
 - この記事から [handover](https://dev.classmethod.jp/articles/claude-code-session-handover/) を知りました。             
 - 最近は /handover で次セッションに切り分けが少しだけ楽に。 
 - 最近のゴタゴタで claude-codeだけに頼るのは危険だと認識しました(Fable停止ショック)
