@@ -23,7 +23,7 @@ FreeBSD jail 上で Codex CLI を利用していたところ、`device-auth` に
 
 現時点では根本原因は未確定であるため、本記事は **調査メモ兼暫定運用記録** である。
 
-# 発生した症状
+## 発生した症状
 
 Codex CLI の認証時に以下のようなエラーが発生した。
 
@@ -43,14 +43,14 @@ HTTP request failed:
 https://chatgpt.com/backend-api/ps/mcp
 ```
 
-# 環境
+## 環境
 
 - FreeBSD
 - jail 環境
 - Codex CLI
 - IPv6 非到達
 
-# 切り分け
+## 切り分け
 
 まず OpenAI 認証サーバへの疎通を確認した。
 
@@ -82,7 +82,7 @@ IPv6 が利用可能な jail では認証に成功した。
 
 一方、IPv6 が利用できない jail では失敗した。
 
-# 暫定回避策
+## 暫定回避策
 
 Node.js の DNS 解決順序を IPv4 優先へ変更する。
 
@@ -98,7 +98,7 @@ codex login --device-auth
 
 この設定により、IPv6 が利用できない jail 環境でも `device-auth` が正常に成功した。
 
-# 恒久設定例
+## 恒久設定例
 
 ユーザー単位で設定する場合。
 
@@ -116,19 +116,17 @@ export NODE_OPTIONS="--dns-result-order=ipv4first"
 setenv NODE_OPTIONS "--dns-result-order=ipv4first"
 ```
 
-# 考察
+## 考察
 
 現時点では、
 
 > Codex CLI が IPv6 を必須としている
 
-とは断定できない。
-
-むしろ、
+可能性は低く
 
 > Node.js の DNS 解決結果として AAAA レコードが優先され、到達不能な IPv6 経路へ接続しようとして失敗している
 
-という仮説の方が整合性が高い。
+という、この手の問題にありがちなパターンに落ちたと見られる。
 
 今回の結果から分かるのは、
 
@@ -138,17 +136,16 @@ setenv NODE_OPTIONS "--dns-result-order=ipv4first"
 
 という事実までである。
 
-# 今後の調査項目
+## 今後の調査項目
 
 以下については未調査である。
 
-- `truss` による `AF_INET6` の確認
 - `tcpdump` による接続先確認
 - MCP 初期化失敗との関連
 - Node.js バージョン差異の影響
 - jail ネットワーク設定との関連
 
-# まとめ
+## まとめ
 
 FreeBSD jail 上で Codex CLI の `device-auth` が失敗する場合、
 
@@ -157,7 +154,10 @@ export NODE_OPTIONS="--dns-result-order=ipv4first"
 ```
 
 を設定することで回避できる可能性がある。
-
 少なくとも筆者の環境では、この設定によって IPv6 非到達 jail 上でも正常に認証できるようになった。
+暫定運用としては十分実用的な回避策と考えている。
 
-根本原因は継続調査中だが、暫定運用としては十分実用的な回避策と考えている。
+## IPv6 に対する　余談
+
+ちなみに "2026/06 現在"でも github.com の AAAA はなくIPv6 接続性が必須でない豊かな世界と、
+IPv6普及のせめぎ合いに巻き込まれている感はある。
