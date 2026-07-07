@@ -88,18 +88,32 @@ VMware における暗号化には 2 種類ある。
 
 ---
 
+<<<<<<< Updated upstream
 ## 当初の仮説（後に棄却）
+=======
+## 根本原因：Kernel 更新による vTPM 封印値の変化??
+>>>>>>> Stashed changes
 
 最初に立てた仮説は「**Kernel 更新による PCR 測定値の変化**」だった。
 
 vTPM は起動チェーンの測定値（PCR: Platform Configuration Register）に鍵を封印する仕組みがある。ホスト Kernel が 6.8 から 7.0 へ更新されたことで `vmmon`/`vmnet` 等の VMware カーネルモジュールが差し替わり、その測定値のズレが自動リリース失敗につながった——という筋書きだ。
 
 ```
+<<<<<<< Updated upstream
 Kernel 更新 → VMware モジュール再ビルド → PCR 値変化
     ↓
 keySafe の自動リリース失敗
     ↓
 「Enter Password」ダイアログ
+=======
+
+VMwareがホストのキーリング等に保存していた自動アンロック（Auto-Unlock）用のキャッシュにアクセスできなくなった、またはキャッシュが消失したため
+
+    ↓
+keySafe が鍵を自動リリースできない
+    ↓
+「Enter Password」ダイアログ表示
+>>>>>>> Stashed changes
 ```
 
 ただし調査を進めると、この説には矛盾が生じた。
